@@ -2,6 +2,12 @@ using HealFit.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using HealFit.Repositories.Interfaces;
+using HealFit.Repositories;
+using HealFit.DTO.Mapping;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,10 +36,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(mySqlConnection,
     ServerVersion.AutoDetect(mySqlConnection)));
 
-//Repositorios
-/*builder.Services.AddScoped<IUsuarioRepository, USuarioRepository>();*/
+// Ignorando Ciclos de Repeticao
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.
+          ReferenceHandler = ReferenceHandler.IgnoreCycles).AddNewtonsoftJson();
+builder.Services.AddControllers()
+        .AddNewtonsoftJson(options => {
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
+// Repositorios
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(UsuarioDTOMappingProfile));
 
 var app = builder.Build();
 

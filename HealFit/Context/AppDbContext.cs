@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HealFit.Models;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HealFit.Context {
@@ -7,7 +8,7 @@ namespace HealFit.Context {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
         }
 
-        //public DbSet<Cliente>? Clientes { get; set; }
+        public DbSet<Usuario>? Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             
