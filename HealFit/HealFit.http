@@ -1,0 +1,6 @@
+@HealFit_HostAddress = http://localhost:5178
+
+GET {{HealFit_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
