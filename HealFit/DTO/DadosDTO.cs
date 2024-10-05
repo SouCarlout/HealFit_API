@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using HealFit.Models;
 
-namespace HealFit.Models; 
-public class DadosPessoais {
-    [Key]
+namespace HealFit.DTO; 
+public class DadosDTO {
     public int DadosId { get; set; }
     public string Nome { get; set; }
     public string Sobrenome { get; set; }
@@ -19,5 +16,5 @@ public class DadosPessoais {
     public string? Numero { get; set; }
     public string? Complemento { get; set; }
     public int UsuarioId { get; set; }
-    public Usuario Usuario { get; set; }
+    public Usuario? Usuario { get; set; }
 }

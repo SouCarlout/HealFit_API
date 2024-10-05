@@ -7,6 +7,7 @@ namespace HealFit.Repositories {
 
         public AppDbContext _context;
         private IUsuarioRepository? _usuarioRepo;
+        private IDadosRepository? _dadosRepo;
 
 
         public UnitOfWork(AppDbContext context) {
@@ -18,6 +19,13 @@ namespace HealFit.Repositories {
 
             get {
                 return _usuarioRepo = _usuarioRepo ?? new UsuarioRepository(_context);
+            }
+        }
+
+        public IDadosRepository DadosRepository {
+
+            get {
+                return _dadosRepo = _dadosRepo ?? new DadosRepository(_context);
             }
         }
 

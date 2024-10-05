@@ -48,11 +48,13 @@ builder.Services.AddControllers()
 
 // Repositorios
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IDadosRepository, DadosRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(UsuarioDTOMappingProfile));
+builder.Services.AddAutoMapper(typeof(DadosDTOMappingProfile));
 
 var app = builder.Build();
 
