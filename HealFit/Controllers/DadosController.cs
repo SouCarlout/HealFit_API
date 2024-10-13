@@ -53,6 +53,21 @@ public class DadosController : ControllerBase {
         return Ok(dadosDTO);
     }
 
+    [HttpGet("Usuario/{id:int}")]
+    public async Task<ActionResult<DadosDTO>> GetUsuario(int id) {
+
+        var dados = await _uof.DadosRepository.GetAsync(u => u.DadosId == id);
+
+        if (dados == null) {
+
+            return BadRequest("Usuario nao encontrado");
+        }
+
+        var dadosDTO = _mapper.Map<DadosDTO>(dados);
+
+        return Ok(dadosDTO);
+    }
+
     [HttpPut]
     public async Task<ActionResult<DadosDTO>> Put(DadosDTO dados) {
 
@@ -69,21 +84,6 @@ public class DadosController : ControllerBase {
         }
 
         _mapper.Map(dados, dadosAtual);
-
-        //dadosAtual.DadosId = dados.DadosId;
-        //dadosAtual.Nome = dados.Nome;
-        //dadosAtual.Sobrenome = dados.Sobrenome;
-        //dadosAtual.DataNascimento = dados.DataNascimento;
-        //dadosAtual.Altura = dados.Altura;
-        //dadosAtual.Peso = dados.Peso;
-        //dadosAtual.Cep = dados.Cep;
-        //dadosAtual.Cidade = dados.Cidade;
-        //dadosAtual.Estado = dados.Estado;
-        //dadosAtual.Bairro = dados.Bairro;
-        //dadosAtual.Rua = dados.Rua;
-        //dadosAtual.Numero = dados.Numero;
-        //dadosAtual.Complemento = dados.Complemento;
-        //dadosAtual.UsuarioId = dados.UsuarioId;
 
         _uof.DadosRepository.Update(dadosAtual);
         await _uof.CommitAsync();

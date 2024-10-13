@@ -10,6 +10,7 @@ namespace HealFit.Context {
 
         public DbSet<Usuario>? Usuarios { get; set; }
         public DbSet<DadosPessoais>? DadosPessoais { get; set; }
+        public DbSet<Consumo>? Consumo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             

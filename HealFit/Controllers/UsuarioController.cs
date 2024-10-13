@@ -2,6 +2,7 @@
 using HealFit.DTO;
 using HealFit.DTO.Request;
 using HealFit.DTO.Rsp;
+using HealFit.Migrations;
 using HealFit.Models;
 using HealFit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,21 @@ public class UsuarioController : ControllerBase {
 
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<LoginDTO>>> GetAll() {
+
+        var usuarios = await _uof.UsuarioRepository.GetAllAsync();
+
+        if (usuarios == null || !usuarios.Any()) {
+            return BadRequest("Usuarios não encontrados");
+        }
+
+        // Mapeando a lista de usuarios para uma lista de LoginDTO
+        var usuarioDTOs = _mapper.Map<IEnumerable<LoginDTO>>(usuarios);
+
+        return Ok(usuarioDTOs);
+    }
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<LoginDTO>>Get (int id) {
 
@@ -88,20 +104,19 @@ public class UsuarioController : ControllerBase {
     [HttpPut("RedefirSenha")]
     public async Task<ActionResult<LoginDTO>> Put(LoginDTO usuario) {
 
-        var usuarios = await _uof.UsuarioRepository.GetAsync(u => u.UsuarioId == usuario.UsuarioId);
+        var usuarioAtual = await _uof.UsuarioRepository.GetAsync(u => u.UsuarioId == usuario.UsuarioId);
 
-        if (usuarios == null) {
+        if (usuarioAtual == null) {
 
             return BadRequest("Nao foi possivel recuperar o usuario");
         }
 
-        usuarios.Senha = usuario.Senha;
+        _mapper.Map(usuario, usuarioAtual);
 
-        _uof.UsuarioRepository.Update(usuarios);
+        _uof.UsuarioRepository.Update(usuarioAtual);
         await _uof.CommitAsync();
 
-        return Ok(usuarios);
-
+        return Ok(usuarioAtual);
     }
 
     [HttpDelete("{id:int}")]
