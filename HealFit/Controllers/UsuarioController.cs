@@ -101,7 +101,7 @@ public class UsuarioController : ControllerBase {
 
     }
 
-    [HttpPut("RedefirSenha")]
+    [HttpPut("RedefinirSenha")]
     public async Task<ActionResult<LoginDTO>> Put(LoginDTO usuario) {
 
         var usuarioAtual = await _uof.UsuarioRepository.GetAsync(u => u.UsuarioId == usuario.UsuarioId);

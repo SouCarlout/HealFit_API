@@ -57,9 +57,28 @@ public class ConsumoController : ControllerBase {
     [HttpGet("Usuario/{id:int}")]
     public async Task<ActionResult<IEnumerable<ConsumoDTO>>> GetConsumoByUserId(int id) {
 
+        var dataAtual = DateTime.Now.Date;
+
         var consumo = await _uof.ConsumoRepository.GetAllAsync();
 
-        var filtro = consumo.Where(u => u.UsuarioId == id);
+        var filtro = consumo.Where(u => u.UsuarioId == id && u.Data.Date == dataAtual);
+
+        if (filtro == null) {
+
+            return BadRequest("Consumo nao encontrado");
+        }
+
+        var dadosDTO = _mapper.Map<IEnumerable<ConsumoDTO>>(filtro);
+
+        return Ok(dadosDTO);
+    }
+
+    [HttpGet("Usuario/{id:int}/{data:datetime}")]
+    public async Task<ActionResult<IEnumerable<ConsumoDTO>>> GetConsumoByUserIdAddDate(int id, DateTime data) {
+
+        var consumo = await _uof.ConsumoRepository.GetAllAsync();
+
+        var filtro = consumo.Where(u => u.UsuarioId == id && u.Data.Date == data);
 
         if (filtro == null) {
 
