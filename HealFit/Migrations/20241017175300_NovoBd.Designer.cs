@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealFit.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241013051054_atualizacaoconsumo")]
-    partial class atualizacaoconsumo
+    [Migration("20241017175300_NovoBd")]
+    partial class NovoBd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
