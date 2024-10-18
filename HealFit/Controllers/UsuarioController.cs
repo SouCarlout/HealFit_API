@@ -2,7 +2,6 @@
 using HealFit.DTO;
 using HealFit.DTO.Request;
 using HealFit.DTO.Rsp;
-using HealFit.Migrations;
 using HealFit.Models;
 using HealFit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HealFit.DTO;
-using HealFit.Migrations;
 using HealFit.Models;
 using HealFit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
